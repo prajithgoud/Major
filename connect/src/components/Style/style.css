@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+.btn {
+    @apply font-bold py-2 px-4 rounded;
+  }
+  .btn-blue {
+    @apply bg-blue-500 text-white;
+  }
+  .btn-blue:hover {
+    @apply bg-blue-700;
+  }
+  .card {
+      @apply bg-white p-10 rounded shadow-2xl;
+  }
+  .textbox {
+    @apply w-full h-9 border-2 border-gray-200 p-2 rounded outline-none focus:border-purple-500;
+  }
+}

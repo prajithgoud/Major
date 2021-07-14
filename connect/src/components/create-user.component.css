@@ -1,0 +1,21 @@
+.wrapper
+{
+    position: fixed;
+    top:25%;
+    left:40%;
+}
+
+.wrapper .g-signin2 
+{
+    position: fixed;
+    top:55%;
+    left: 43%;
+}
+
+.wrapper .g-signout
+{
+    position: fixed;
+    top:56%;
+    left:60%;
+}
+
