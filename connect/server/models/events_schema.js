@@ -15,6 +15,9 @@ let postSchema = new Schema({
   authorName: {
       type: String
   },
+  Photo : {
+    type : String
+  },
   time: {
     type: Date,
   }

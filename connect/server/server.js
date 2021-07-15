@@ -21,7 +21,7 @@ const saltRounds = 10;
 require("./database/db");
 const nodemailer = require('nodemailer');
 const creds = require('./config');
-const { getMaxListeners } = require('./models/user-schema');
+const { getMaxListeners, events } = require('./models/user-schema');
 const { verify } = require('crypto');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -211,17 +211,17 @@ app.use('/verifyroles',(req,res,next) => {
 })
 
 app.post('/create-checkout-session', async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+    const params = {
+        payment_method_types: ['card'],
       line_items: [
         {
           price_data: {
             currency: 'inr',
             product_data: {
-              name: "hello",
-              images: ['https://i.imgur.com/EHyR2nP.png'],
+              name: req.body.eventname,
+            //   images: ['https://i.imgur.com/EHyR2nP.png'],
             },
-            unit_amount: 2000,
+            unit_amount: req.body.eventcost,
           },
           quantity: 1,
         },
@@ -229,7 +229,8 @@ app.post('/create-checkout-session', async (req, res) => {
       mode: 'payment',
       success_url: `${YOUR_DOMAIN}/success.html`,
       cancel_url: `${YOUR_DOMAIN}/public/cancel.html`,
-    });
+    }
+    const session = await stripe.checkout.sessions.create( params );
     res.redirect(303, session.url)
   });
 
@@ -515,8 +516,9 @@ app.use('/updatephoto/:id' , upload.single('Photo'),resizePhoto,(req, res, next)
    
 })
 
+//  Photo UPLOAD
+
 const uploadpic = multer({
-    
     storage:multer.memoryStorage(),
     fileFilter:(req,file,cb) => {
             if(file.mimetype.startsWith('image')) {
@@ -532,7 +534,7 @@ const uploadpic = multer({
 const resizepic = (req,res,next) => {
     if(!req.file)
         return next();
-    req.file.filename = `${req.params.id}.jpeg`;
+    req.file.filename = `useruploadedpost - ${req.params.content}.jpeg`;
 
     sharp(req.file.buffer)
     .resize(500,500)
@@ -543,31 +545,28 @@ const resizepic = (req,res,next) => {
     next();
 };
 
-app.use('/uploadpic/:name/:content', uploadpic.single('Photo'),resizepic,async (req, res) => {
+app.use('/uploadpic/:name/:content' , uploadpic.single('Photo'),resizepic,(req, res, next) => {
     console.log(req.file);
     console.log(req.body);
-    console.log(req.params.name);
+    
     posts.updateOne({authorName : req.params.name,content : req.params.content},
-    {
-        $set: {
-            Photo: req.file.filename
-        }
-    },
-    (error, data) => {
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data)
-                console.log('User updated successfully !')
+        {
+            $set: {
+                Photo: req.file.filename
             }
         }
-    )
-
-  },(req, res, next) => {
-    console.log(req.file);
-    console.log(req.body);
+    , (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data)
+            console.log('User updated successfully !')
+        }
+    })
 })
 
+
+// PDF UPLOAD
 
 const uploadpost = multer({
     storage: multer.diskStorage({
@@ -608,30 +607,16 @@ app.use('/uploadpost/:name/:content', uploadpost.single('post'),async (req, res)
                 return next(error);
             } else {
                 res.json(data)
-                console.log('User updated successfully !')
+                console.log('User updated successfully !!')
             }
         }
     )
-//     try {
-//       const { path, mimetype } = req.file;
-//       const file = new File({
-//         file_path: path,
-//         file_mimetype: mimetype
-//       });
-//       await file.save();
-//       res.send('file uploaded successfully.');
-//     } catch (error) {
-//       res.status(400).send('Error while uploading file. Try again later.');
-//     }
-//   },
-//   (error, req, res, next) => {
-//     if (error) {
-//       res.status(500).send(error.message);
-//     }
+
   },(req, res, next) => {
     console.log(req.file);
     console.log(req.body);
 })
+
 
 app.get('/getAllFiles', async (req, res) => {
     try {
@@ -658,6 +643,56 @@ app.get('/download/:id', async (req, res) => {
       res.status(400).send('Error while downloading file. Try again later.');
     }
   });
+
+
+    //  EVENT PIC UPLOAD
+
+const uploadeventpic = multer({
+    storage:multer.memoryStorage(),
+    fileFilter:(req,file,cb) => {
+            if(file.mimetype.startsWith('image')) {
+                cb(null,true);
+            }
+            else{
+                cb(new AppError('Not an image! Please Upload only image.',400),false);
+            }
+        }
+});
+
+
+const resizeeventpic = (req,res,next) => {
+    if(!req.file)
+        return next();
+    req.file.filename = `usereventpic - ${req.params.content}.jpeg`;
+
+    sharp(req.file.buffer)
+    // .resize(500,500)
+    .toFormat('jpeg')
+    .jpeg({ quality:90})
+    .toFile(`public/img/users/${req.file.filename}`);
+
+    next();
+};
+
+app.use('/uploadeventpic/:name/:content' , uploadeventpic.single('Photo'),resizeeventpic,(req, res, next) => {
+    console.log(req.file);
+    console.log(req.body);
+    
+    events.updateOne({authorName : req.params.name,content : req.params.content},
+        {
+            $set: {
+                Photo: req.file.filename
+            }
+        }
+    , (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data)
+            console.log('User updated successfully !')
+        }
+    })
+})
 
 
 app.use('/update/:id' ,(req, res, next) => {

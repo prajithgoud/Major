@@ -2,8 +2,88 @@ import React, { Component } from 'react';
 import "./welcome.css";
 import Header from "./header";
 import { Link } from "react-router-dom";
+import jwt from "jsonwebtoken";
+import axios from 'axios';
+import { connect } from "react-redux";
+import { withRouter } from 'react-router';
 
-export default class Welcome extends Component {
+class Welcome extends Component {
+
+    constructor(props) {
+        super(props)
+        this.signoutuser = this.signoutuser.bind(this);
+      }
+
+      signoutuser (e) {
+        localStorage.removeItem('token');
+        this.props.history.push({
+          pathname : '/'
+        });
+        window.location.reload(false);
+      };
+
+      componentDidMount()
+  {
+    // window.location.reload(false);
+    if(this.props.authenticated)
+    {
+      console.log('true')
+      const token = localStorage.getItem('token')
+      const info = jwt.decode(token,process.env.JWT_SECRET)
+      // uname = info.uname;
+    }
+  }
+
+  renderLinks() {
+    if (this.props.authenticated) {
+      console.log('true')
+      var id = ""
+      axios.get('http://localhost:5000/userdetails', { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`} })
+      .then((res) => {
+         
+        // this.setState({ id:res.data.Photo })
+        // this.state.id = res.data.Photo
+        setTimeout(() => {
+          // this.setState({ id:res.data.Photo })
+          id = res.data.Photo
+        }, 500);
+        // console.log(id);
+      })
+      console.log(id);
+      return (
+        <div >
+   
+    <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white " data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="sr-only">Open user menu</span>
+                {/* <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/${id}`}  alt=""/> */}
+                <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+              </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="/userprofile">Your profile</a></li>
+      <li><a class="dropdown-item" href="/settings">Reset Password</a></li>
+      <li><a class="dropdown-item" href="/addPhoto">Upload userphoto</a></li>
+      <li><a class="dropdown-item" href="/updateprofile">Update Profile</a></li>
+      <li><hr class="dropdown-divider" /></li>
+      <li><a class = "dropdown-item" ><button onClick = {this.signoutuser}> Sign out</button></a></li>
+    </ul>
+  </div>
+      );
+    } else {
+      console.log("false")
+      return (
+      
+        <div>
+            <Link class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium sm:inline-block" to="/signin">
+              Sign Up
+            </Link>
+            <Link class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium" to="/login">
+              Sign In
+            </Link>
+        </div>
+          
+      );
+    }
+  }
 
     render(){
         return(
@@ -22,14 +102,15 @@ export default class Welcome extends Component {
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="#page-top">
-                    {/* <img src={`http://localhost:5000/public/img/assets/img/navbar-logo.svg`} alt="..." /> */}
+                   
                     <span class="hover:text-gray-300 text-base pr-1">Home</span>
-                    <Link class="text-gray-300 hover:bg-yellow-400 hover:text-white px-2 py-2 rounded-md text-base font-medium sm:inline-block" to="/signin">
+                    {/* <Link class="text-gray-300 hover:bg-yellow-400 hover:text-white px-2 py-2 rounded-md text-base font-medium sm:inline-block" to="/signin">
                         Sign Up
                     </Link>
                     <Link class="text-gray-300 hover:bg-yellow-400 hover:text-white px-2 py-2 rounded-md text-base font-medium" to="/login">
                         Sign In
-                    </Link>
+                    </Link> */}
+                    <div>{this.renderLinks()}</div>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
@@ -579,3 +660,12 @@ export default class Welcome extends Component {
         )
     }
 }
+
+function mapStatetoProps(state) {
+    // console.log(state);
+    return {
+      authenticated: state.auth.authenticated
+    }
+  }
+  
+  export default withRouter(connect(mapStatetoProps)(Welcome));

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Header from "../header";
+import Helmet from 'react-helmet';
 
 
 class PostNew extends Component {
@@ -12,15 +13,22 @@ class PostNew extends Component {
         this.onChangecontent = this.onChangecontent.bind(this);
         this.onchangepriority = this.onchangepriority.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.handlePicupload = this.handlePicupload.bind(this);        
+
         this.state = {
             title: '',
             categories: '',
             ispriority: false,
-            postedby: ''
+            postedby: '',
+            Photo:''
         }
     }
 
-
+    handlePicupload(e) {
+        this.setState({
+            Photo: e.target.files[0]
+          })
+    }
 
     onChangetitle(e) {
         this.setState({ title: e.target.value })
@@ -74,12 +82,39 @@ class PostNew extends Component {
                         })
                 })
         }
+        
 
-        setTimeout(() => {
-            this.props.history.push({
-                pathname: '/events',
-            });
-        },700);
+         //   PHOTO UPLOAD
+
+      var data2 = new FormData();
+      data2.append('Photo', this.state.Photo);
+      console.log(this.state.Photo);
+    //   console.warn(this.state.Photo);
+      axios.get('http://localhost:5000/userdetails', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
+      // axios.get('/userdetails', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
+      .then((res)=>{
+          var id = res.data._id
+          var name = res.data.Name;
+          var content = this.state.content;
+          console.log(content);
+          axios.post(`http://localhost:5000/uploadeventpic/${name}/${content}`,data2,{
+          // axios.post(`/updatephoto/${id}`,data,{
+              // headers: {
+                
+              //   'Content-Type': `multipart/form-data`
+              // }
+            }).then((res) => {
+              console.log(res.data);
+          }).catch((err) => {
+              console.error(err);
+          })
+      })
+
+        // setTimeout(() => {
+        //     this.props.history.push({
+        //         pathname: '/events',
+        //     });
+        // },700);
     }
 
 
@@ -128,18 +163,58 @@ class PostNew extends Component {
                     <input type="text" class="w-full h-9 border-2 border-gray-200 p-2 rounded outline-none focus:border-purple-500" value={this.state.content} onChange={this.onChangecontent} />
                 </div>
 
-                <div class="flex justify-center">
+                <div class="flex flex-wrap justify-center">
+                <div class="w-2/3">
+                    <div class = "image-preview" id = "imagePreview"> 
+                       <img src = "" alt = "Image Preview" class = "image-preview__image"/>
+                        <span class="image-preview__default-text">Image Preview</span>
+                    </div>
+                    <br />
+                    <input type = "file" name = "inpFile" id = "inpFile" accept = "image/*" onChange={this.handlePicupload} class="pt-4"/>
+                </div>
+                </div>
+
+                {/* <div class="flex justify-center">
                     <label class="text-blue-600">
                         <input type="checkbox" class="form-checkbox mr-1 h-4 w-4 text-blue-600" value={this.state.ispriority} onChange={this.onchangepriority} />
                            <span class="font-bold text-gray-700">Priority</span> 
                     </label>
-                </div>
+                </div> */}
 
                 <div class="flex justify-center">
                 <button class="font-bold py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-700" onClick={this.update}>Submit</button>
                 </div>
     
                 </form>
+                <Helmet>
+                <script>
+                    {`
+                        const inpFile = document.getElementById("inpFile");
+                        const previewContainer = document.getElementById("imagePreview");
+                        const previewImage = previewContainer.querySelector(".image-preview__image");
+                        const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
+                        inpFile.addEventListener("change", function() {
+                            const file = this.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                previewDefaultText.style.display = "none";
+                                previewImage.style.display = "block";
+                                reader.addEventListener("load", function() {
+                                    console.log(this);
+                                    previewImage.setAttribute("src",this.result);
+                                });
+                                reader.readAsDataURL(file);
+                            }
+                            else {
+                                previewDefaultText.style.display = null;
+                                previewImage.style.display = null;
+                                previewImage.setAttribute("src","");
+                            }
+                            
+                        })
+                    `}
+                </script>
+                </Helmet>
             </div>
 
         </div>

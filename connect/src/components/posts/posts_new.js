@@ -15,15 +15,22 @@ class CreateUser extends Component {
         this.onChangecontent = this.onChangecontent.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handlePicupload = this.handlePicupload.bind(this);        
         this.state = {
             title : '',
             categories : '',
             content : '',
-            Photo : ''
+            Photo: '',
+            post:''
         }
     }
 
     handleInputChange(e) {
+        this.setState({
+            post: e.target.files[0]
+          })
+    }
+    handlePicupload(e) {
         this.setState({
             Photo: e.target.files[0]
           })
@@ -73,33 +80,7 @@ class CreateUser extends Component {
         .catch((error)=>{
             console.log(error.response.data);
         })
-
-    //     const data = new FormData();
-    //     data.append('Photo', this.state.Photo);
-    //     console.log(this.state.Photo);
-    //     axios.get('http://localhost:5000/userdetails', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
-    //   // axios.get('/userdetails', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
-    //   .then((res)=>{
-    //       console.log(res.data);
-    //       var name = res.data.Name;
-    //       var content = this.state.content;
-    //        console.log(name);
-    //           axios.post(`http://localhost:5000/updatepic/${name}/${content}`,data,{
-    //             // headers: {
-    //             //     'Content-Type': 'multipart/form-data'
-    //             //   }
-    //           })
-    //           .then((res) => {
-    //               console.log(res.data);
-    //           }).catch((err) => {
-    //               console.log(err);
-    //           })
-    //       })
-    //   .catch((err) => {
-    //       console.error(err);
-    //   })
-
-      const data = new FormData();
+        var data = new FormData();
         data.append('post', this.state.post);
         console.log(this.state.post);
         axios.get('http://localhost:5000/userdetails', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
@@ -108,7 +89,7 @@ class CreateUser extends Component {
           console.log(res.data);
           var name = res.data.Name;
           var content = this.state.content;
-        //   console.log(id);
+          console.log(name);
               axios.post(`http://localhost:5000/uploadpost/${name}/${content}`,data,{
                 // headers: {
                 //     'Content-Type': 'multipart/form-data'
@@ -123,15 +104,41 @@ class CreateUser extends Component {
       .catch((err) => {
           console.error(err);
       })
-        setTimeout(() => {
-            this.props.history.push({
-                pathname: '/posts',
-            });
-        },700);
+        
+    //   PHOTO UPLOAD
+
+      var data2 = new FormData();
+      data2.append('Photo', this.state.Photo);
+      console.log(this.state.Photo);
+    //   console.warn(this.state.Photo);
+      axios.get('http://localhost:5000/userdetails', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
+      // axios.get('/userdetails', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
+      .then((res)=>{
+          var id = res.data._id
+          var name = res.data.Name;
+          var content = this.state.content;
+          console.log(content);
+          axios.post(`http://localhost:5000/uploadpic/${name}/${content}`,data2,{
+          // axios.post(`/updatephoto/${id}`,data,{
+              // headers: {
+                
+              //   'Content-Type': `multipart/form-data`
+              // }
+            }).then((res) => {
+              console.log(res.data);
+          }).catch((err) => {
+              console.error(err);
+          })
+      })
+
+      setTimeout(() => {
+        this.props.history.push({
+            pathname: '/posts',
+        });
+         },700);
+
     }
-
-
-
+      
 
     render() {
         return (
@@ -178,21 +185,22 @@ class CreateUser extends Component {
                     <input type="text" class="w-full h-9 border-2 border-gray-200 p-2 rounded outline-none focus:border-purple-500" value={this.state.content} onChange={this.onChangecontent} />
                 </div>
 
+                
                 <div class="flex flex-wrap justify-center">
-                <div class = "image-preview" id = "imagePreview"> 
-                        <img src = {`http://localhost:5000/public/img/users/${this.state.Photo}`} alt = "Image Preview" class = "image-preview__image"/>
-                        <span class="image-preview__default-text"></span>
+                <div class="w-2/3">
+                    <div class = "image-preview" id = "imagePreview"> 
+                       <img src = "" alt = "Image Preview" class = "image-preview__image"/>
+                        <span class="image-preview__default-text">Image Preview</span>
                     </div>
-
-                {/* <div class="w-2/3">
-                    <input type = "file" name = "inpFile" id = "inpFile" accept = "image/*" onChange={this.handleInputChange} class="pt-4"/>
-                </div> */}
+                    <br />
+                    <input type = "file" name = "inpFile" id = "inpFile" accept = "image/*" onChange={this.handlePicupload} class="pt-4"/>
                 </div>
-
+                </div>
                 <div>
                     <label class="block mb-1 font-bold text-gray-700">Attach a pdf</label>
-                    <input type = "file" name = "inpFile" id = "inpFile" accept = "application/pdf" onChange={this.handleInputChange} class="pt-4"/>
+                    <input type = "file" name = "inpFile"  accept = "application/pdf" onChange={this.handleInputChange} class="pt-4"/>
                 </div>
+            
 
                 <div class="flex justify-center">
                 <button class="font-bold py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-700" onClick={this.update}>Submit</button>

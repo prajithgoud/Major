@@ -139,8 +139,11 @@ renderEventSummary(event) {
                                         Close Project
                                     </button> */}
                                     <form action="http://localhost:5000/create-checkout-session" method="POST">
+                                        <input type="text" name="eventname" value={event.title} type="hidden" />
+                                        <input type="text" name="eventcost" value="75000"  type="hidden"/>
                                         <button type="submit">Checkout</button>
                                     </form>
+                                    
                                 </div>
                             </div>
                         </div>

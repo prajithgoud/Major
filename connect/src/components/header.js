@@ -215,8 +215,18 @@ class Header extends Component {
     {
       console.log('true')
       const token = localStorage.getItem('token')
-      const info = jwt.decode(token,process.env.JWT_SECRET)
-      // uname = info.uname;
+      // const info = jwt.decode(token,process.env.JWT_SECRET)
+      // // uname = info.uname;
+      // console.log(info)
+      // this.setState({
+      //   id : info.uid
+      // })
+      axios.get('http://localhost:5000/userdetails', { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`} })
+      .then((res) => {
+        this.setState({
+          id: res.data._id
+        })
+      })
     }
   }
   dataTable() {
@@ -248,38 +258,37 @@ class Header extends Component {
     }, 20)
 }
 renderLinks() {
+ 
   if (this.props.authenticated) {
     console.log('true')
-    var id = ""
-    axios.get('http://localhost:5000/userdetails', { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`} })
-    .then((res) => {
-       
-      // this.setState({ id:res.data.Photo })
-      // this.state.id = res.data.Photo
-      setTimeout(() => {
-        // this.setState({ id:res.data.Photo })
-        id = res.data.Photo
-      }, 500);
-      // console.log(id);
-    })
-    console.log(id);
+    
+    // axios.get('http://localhost:5000/userdetails', { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`} })
+
+    // .then((res) => {
+    //   setTimeout(() => {
+    //     this.setState({
+    //       id: res.data._id
+    //     })
+    //   }, 500);
+    // })
+    // // console.log(id);
     return (
       <div >
  
-  <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white " data-bs-toggle="dropdown" aria-expanded="false">
-  <span class="sr-only">Open user menu</span>
-              {/* <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/${id}`}  alt=""/> */}
-              <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
-            </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/userprofile">Your profile</a></li>
-    <li><a class="dropdown-item" href="/settings">Reset Password</a></li>
-    <li><a class="dropdown-item" href="/addPhoto">Upload userphoto</a></li>
-    <li><a class="dropdown-item" href="/updateprofile">Update Profile</a></li>
-    <li><hr class="dropdown-divider" /></li>
-    <li><a class = "dropdown-item" ><button onClick = {this.signoutuser}> Sign out</button></a></li>
-  </ul>
-</div>
+        <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white " data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="sr-only">Open user menu</span>
+                    {/* <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/${id}`}  alt=""/> */}
+                    <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/user - ${this.state.id}.jpeg`} alt=""/>
+                  </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/userprofile">Your profile</a></li>
+          <li><a class="dropdown-item" href="/settings">Reset Password</a></li>
+          <li><a class="dropdown-item" href="/addPhoto">Upload userphoto</a></li>
+          <li><a class="dropdown-item" href="/updateprofile">Update Profile</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class = "dropdown-item" ><button onClick = {this.signoutuser}> Sign out</button></a></li>
+        </ul>
+      </div>
     );
   } else {
     console.log("false")

@@ -12,6 +12,7 @@ import jwt from "jsonwebtoken";
 import axios from 'axios';
 import "./stylecontent.css";
 import download from 'downloadjs';
+import "./profileUpdateStyle.css";
 
 class PostList extends Component {
 
@@ -79,10 +80,17 @@ class PostList extends Component {
           <div className="text-justify" dangerouslySetInnerHTML={{ __html: post.content }} />
         </h3>
         <br />
-        <a href="#/" onClick={() =>
-                        downloadFile(`${post._id}`, `${post.post}`, 'application/pdf')
-                      }
-        > Download file </a>
+        { post.Photo !== undefined  &&
+          <div class = "image-preview" id = "imagePreview"> 
+          <img src = {`http://localhost:5000/public/img/users/useruploadedpost - ${post.content}.jpeg`} class = "image-preview__image"  alt = "Image Preview"/> 
+        </div>}
+
+        { post.post !== undefined &&
+            <a href="#/" onClick={() =>
+                            downloadFile(`${post._id}`, `${post.post}`, 'application/pdf')
+                          }
+            > Download file </a>
+          }
         {this.state.signedin === true && <Link className="link-without-underline" to={`/commentnew/${post._id}`}> Comment </Link>}
         <br />
         {<Link className="link-without-underline" to={`/comments/${post._id}`}> View Comments </Link>}

@@ -22,10 +22,10 @@ let postSchema = new Schema({
   time: {
       type: Date
   },
-  Photo: {
-    type: String
-  },
   post : {
+    type : String
+  },
+  Photo : {
     type : String
   },
   file_path: {
