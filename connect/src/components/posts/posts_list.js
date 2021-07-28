@@ -65,9 +65,9 @@ class PostList extends Component {
         <h2 class="text-2xl font-bold mb-2 text-gray-700 flex justify-center">{post.title}</h2>
         
         <div class="absolute">
-            <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-expanded="false">
+            <a href={`http://localhost:3000/profile/${post.authorId}`} class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-expanded="false">
                 <img class="h-6 w-6 rounded-full" src={`http://localhost:5000/public/img/users/user - ${post.authorId}.jpeg`} alt=""/>
-            </button>
+            </a>
             
         </div>
 

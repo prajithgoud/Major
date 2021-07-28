@@ -30,11 +30,8 @@ import reducers from "./reducers/root_reducer";
 import { AUTH_USER } from "./actions/types";
 import Pageloader from './components/PageLoader';
 import Signupsuccess from './components/Signupsuccess';
-import addPhoto from './components/addPhoto'
-// import { Token } from '../server/server';
-
-// import Cookies from 'js-cookie';
-// import  { Cookies } from 'react-cookie';
+import addPhoto from './components/addPhoto';
+import postbyid from './components/Profilewithid'
 
 
 import Cookies from 'universal-cookie';
@@ -125,6 +122,7 @@ function App() {
               <Route path="/addPhoto" component={addPhoto} />
               <Route path="/events" component={EventList} />
               <Route path="/eventnew" component={EventNew} />
+              <Route path="/profile/:id" component={postbyid} />
               <Pageloader />
               <Signupsuccess />
             </switch>

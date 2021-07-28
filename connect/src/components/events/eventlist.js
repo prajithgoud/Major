@@ -106,7 +106,7 @@ renderEventSummary(event) {
                             </div>
           </div>
 
-      <div>
+      
       <head>
           <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch" />
           <script src="https://js.stripe.com/v3/" />
@@ -121,9 +121,9 @@ renderEventSummary(event) {
                                 <div class="modal-body">
                                     
                                     <h2 class="text-uppercase">{event.title}</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    {/* <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p> */}
                                     <img class="img-fluid d-block mx-auto" src={`http://localhost:5000/public/img/users/${event.Photo}`} alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <p>{event.content}</p>
                                     
                                     <form action="http://localhost:5000/create-checkout-session" method="POST">
                                         <input type="text" name="eventname" value={event.title} type="hidden" />
@@ -138,7 +138,7 @@ renderEventSummary(event) {
                 </div>
             </div>
         </div>
-    </div>
+    
 
     </div>
   );

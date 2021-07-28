@@ -115,27 +115,14 @@ export function fetchpostsbyid() {
   }
 }
 
-// export function createPost({ title, categories, content }, historyPush, historyReplace) {
-
-//   return function(dispatch) {
-//     axios.post('http://localhost:5000/api/createpost/', {
-//       title,
-//       categories,
-//       content,
-//     }, {
-//       headers: {authorization: localStorage.getItem('token')},  // require auth
-//     })
-//       .then((response) => {  // If create post succeed, navigate to the post detail page
-//         dispatch({
-//           type: CREATE_POST,
-//           payload: response.data,
-//         });
-//       })
-//       .catch((response) => {  // If create post failed, alert failure message
-//         historyReplace('/postnew', {
-//           time: new Date().toLocaleString(),
-//           // message: response.data.message,
-//         });
-//       });
-//   }
-// }
+export function fetchpostsbyid2(id) {
+  return function(dispatch) {
+      axios.get(`http://localhost:5000/api/posts/${id}`).then((response) => {
+      console.log(response)
+      dispatch({
+        type: FETCH_POSTS_BY_ID,
+        payload: response.data,
+      });
+    });
+  }
+}

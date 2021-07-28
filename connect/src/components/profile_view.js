@@ -77,6 +77,7 @@ class profile_view extends Component {
     
       deletepost(postid)
       {
+          console.log("helooo");
         axios.post(`http://localhost:5000/deletepost/${postid}`)
         .then((res)=> {
           console.log(res)
