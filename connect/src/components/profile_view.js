@@ -4,13 +4,18 @@ import "./profileUpdateStyle.css";
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import Header from "./header";
+import _ from 'lodash';
+import { Link } from 'react-router-dom';
+import { fetchpostsbyid } from "../actions/index"
 
 class profile_view extends Component {
 
     constructor(props)
     {
         super(props)
-
+       
+          this.decide = this.decide.bind(this);
+          this.deletepost = this.deletepost.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.state = {
             name : '',
@@ -19,16 +24,14 @@ class profile_view extends Component {
             email : '',
             department : '',
             description : '',
-            Photo: ''
+            Photo: '',
+            verified: '',
+            signedin: ''
         }
     }
 
     componentDidMount() {
-        // if(this.props.authenticated){
-            // if(!this.props.authenticated)
-            // {
-                // this.props.history.replace('/posts');
-            // }
+      
         axios.get('http://localhost:5000/userdetails', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
         .then((res)=>{
             console.log(res.data.Name)
@@ -42,6 +45,8 @@ class profile_view extends Component {
                 Photo: res.data.Photo
             })
         })
+        this.decide();
+        this.props.fetchpostsbyid();
     }
 
     onSubmit(e) {
@@ -51,24 +56,70 @@ class profile_view extends Component {
         });
     }
 
+    renderPostSummary(post) {
+        return (
+          <div key={post._id}>
+    
+            {/* {this.renderTags(post.categories)} */}
+            <span>Title: {post.title}</span><br />
+            <span className="span-with-margin text-grey"> • </span>
+            <span className="span-with-margin text-grey">Author: {post.authorName}</span><br />
+            <span className="span-with-margin text-grey"> • </span>
+            <span className="span-with-margin text-grey">{new Date(post.time).toLocaleString()}</span>
+            <div className="text-justify" dangerouslySetInnerHTML={{ __html: post.content }} />
+            <button onclick = {this.deletepost(post._id)}>Delete</button>
+            <br />
+            <Link className="link-without-underline" to={`/comments/${post._id}`}> View Comments </Link>
+            <hr />
+          </div>
+        );
+      }
+    
+      deletepost(postid)
+      {
+        axios.post(`http://localhost:5000/deletepost/${postid}`)
+        .then((res)=> {
+          console.log(res)
+        })
+      }
+    
+      decide() {
+        console.log('entered')
+        axios.get('http://localhost:5000/token', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
+          .then((res) => {
+            if (res.data !== null) {
+              console.log('2nd entered')
+              this.setState({
+                signedin: true
+              })
+            }
+          })
+          .catch((error) => {
+            // this.state.message = error.response.data.message
+          });
+    
+    
+        setTimeout(() => {
+          if (this.state.signedin === true) {
+            console.log('3rd')
+            axios.get('http://localhost:5000/userdetails', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
+              .then((res) => {
+                if (res.data.isverified === "true") {
+                  console.log('4th entered')
+                  this.setState({
+                    verified: true
+                  })
+                }
+              })
+          }
+        }, 200);
+      }
+    
+
     render() {
         return (
-            // <div>
-            //     <br />
-            //     <br />
-            //     <br />
-            //     <br />
-            //     <p>Name: {this.state.name}</p>
-            //     <p>DOB: {this.state.dob}</p>
-            //     <p>Gender: {this.state.gender}</p>
-            //     <p>Email: {this.state.email}</p>
-            //     <p>Department: {this.state.department}</p>
-            //     <p>Description: {this.state.description}</p>
-            //     {/* <p>Photo : {this.state.Photo} </p> */}
-            //     <img src = {this.state.Photo} class = "image-preview__image" alt="Profile_pic" />
 
-            //     <button onClick={this.onSubmit}>Update profile</button>
-            // </div>
+            <React.Fragment>
             
             <div>
                 <Header/>
@@ -109,8 +160,7 @@ class profile_view extends Component {
                 </div>
                <br></br>
                 <Helmet>
-                {/* <meta charSet="utf-8" /> */}
-                {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" /> */}
+             
                 <script>
                     {`
                         const inpFile = document.getElementById("inpFile");
@@ -146,6 +196,18 @@ class profile_view extends Component {
 
         </div>
         </div>
+            
+        <div>
+        <br />
+        <br />
+        <h3 className="mt-5 mb-4">Your Posts</h3>
+        {_.map(this.props.posts, postsbyid => {
+          return this.renderPostSummary(postsbyid);
+        })}
+      </div>
+
+        </React.Fragment>
+
         );
    
 }
@@ -160,4 +222,4 @@ function mapStateToProps(state) {
     posts: state.posts 
   };
 }
-export default connect(mapStateToProps)(profile_view);
+export default connect(mapStateToProps , {fetchpostsbyid})(profile_view);

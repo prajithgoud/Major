@@ -98,11 +98,11 @@ renderEventSummary(event) {
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src={`http://localhost:5000/public/img/assets/img/portfolio/1.jpg`} alt="..." />
+                                <img class="img-fluid" src={`http://localhost:5000/public/img/users/${event.Photo}`} alt="..." />
                             </a>
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading">{event.title}</div>
-                                <div class="portfolio-caption-subheading text-muted">Illustration</div>
+                                <div class="portfolio-caption-subheading text-muted"></div>
                             </div>
           </div>
 
@@ -120,28 +120,15 @@ renderEventSummary(event) {
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     
-                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <h2 class="text-uppercase">{event.title}</h2>
                                     <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src={`http://localhost:5000/public/img/assets/img/portfolio/1.jpg`} alt="..." />
+                                    <img class="img-fluid d-block mx-auto" src={`http://localhost:5000/public/img/users/${event.Photo}`} alt="..." />
                                     <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Threads
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Illustration
-                                        </li>
-                                    </ul>
-                                    {/* <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-times me-1"></i>
-                                        Close Project
-                                    </button> */}
+                                    
                                     <form action="http://localhost:5000/create-checkout-session" method="POST">
                                         <input type="text" name="eventname" value={event.title} type="hidden" />
                                         <input type="text" name="eventcost" value="75000"  type="hidden"/>
-                                        <button type="submit">Checkout</button>
+                                        <button class="font-bold py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-700" type="submit">Checkout</button>
                                     </form>
                                     
                                 </div>

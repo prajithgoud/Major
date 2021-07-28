@@ -66,7 +66,7 @@ class PostList extends Component {
         
         <div class="absolute">
             <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-expanded="false">
-                <img class="h-6 w-6 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+                <img class="h-6 w-6 rounded-full" src={`http://localhost:5000/public/img/users/user - ${post.authorId}.jpeg`} alt=""/>
             </button>
             
         </div>
@@ -81,8 +81,8 @@ class PostList extends Component {
         </h3>
         <br />
         { post.Photo !== undefined  &&
-          <div class = "image-preview" id = "imagePreview"> 
-          <img src = {`http://localhost:5000/public/img/users/useruploadedpost - ${post.content}.jpeg`} class = "image-preview__image"  alt = "Image Preview"/> 
+          <div class ="flex justify-center" > 
+          <img src = {`http://localhost:5000/public/img/users/useruploadedpost - ${post.content}.jpeg`} class="h-5/12 w-1/2 rounded "/> 
         </div>}
 
         { post.post !== undefined &&
@@ -91,6 +91,7 @@ class PostList extends Component {
                           }
             > Download file </a>
           }
+          <br></br>
         {this.state.signedin === true && <Link className="link-without-underline" to={`/commentnew/${post._id}`}> Comment </Link>}
         <br />
         {<Link className="link-without-underline" to={`/comments/${post._id}`}> View Comments </Link>}
@@ -102,7 +103,7 @@ class PostList extends Component {
   decide() {
     axios.get('http://localhost:5000/token', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
       .then((res) => {
-        if (res.data === true) {
+        if (res.data !== null) {
           this.setState({
             signedin : true
           })
@@ -128,15 +129,18 @@ class PostList extends Component {
 
     
   render() {
+    // console.log(this.state.verified)
       return (
         
         <div class="bg-gray-200">  
           <Header/>
           <Reload />
-  
+
           <div className="post">
+          
             <div class="flex justify-center pt-3">
                 { this.state.verified === true && <Link className="font-bold py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-700" to={'/postnew'}>Publish A New Post</Link> }
+                
             </div>
             
             <div class="style_post space-y-3">

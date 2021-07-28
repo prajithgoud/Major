@@ -56,7 +56,7 @@ class Welcome extends Component {
     <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white " data-bs-toggle="dropdown" aria-expanded="false">
     <span class="sr-only">Open user menu</span>
                 {/* <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/${id}`}  alt=""/> */}
-                <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+                <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/user - ${this.props.id}.jpeg`} alt=""/>
               </button>
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="/userprofile">Your profile</a></li>
@@ -73,10 +73,10 @@ class Welcome extends Component {
       return (
       
         <div>
-            <Link class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium sm:inline-block" to="/signin">
+            <Link class="text-gray-100 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium sm:inline-block" to="/signin">
               Sign Up
             </Link>
-            <Link class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium" to="/login">
+            <Link class="text-gray-100 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" to="/login">
               Sign In
             </Link>
         </div>
@@ -118,11 +118,11 @@ class Welcome extends Component {
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><Link class="text-gray-300 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" to="/posts">Media</Link></li>
-                        <li class="nav-item"><Link class="text-gray-300 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" to="/events">Events</Link></li>
-                        <li class="nav-item"><a class="text-gray-300 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" href="#about">About</a></li>
-                        <li class="nav-item"><a class="text-gray-300 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" href="#team">Team</a></li>
-                        <li class="nav-item"><a class="text-gray-300 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" href="#contact">Contact</a></li>
+                        <li class="nav-item"><Link class="text-gray-100 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" to="/posts">Media</Link></li>
+                        <li class="nav-item"><Link class="text-gray-100 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" to="/events">Events</Link></li>
+                        <li class="nav-item"><a class="text-gray-100 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" href="#about">About</a></li>
+                        <li class="nav-item"><a class="text-gray-100 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" href="#team">Team</a></li>
+                        <li class="nav-item"><a class="text-gray-100 hover:bg-yellow-400 hover:text-white px-3 py-2 rounded-md text-base font-medium" href="#contact">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -136,7 +136,7 @@ class Welcome extends Component {
             </div>
         </header>
        
-        <section class="page-section" id="services">
+        {/* <section class="page-section" id="services">
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">Services</h2>
@@ -325,7 +325,7 @@ class Welcome extends Component {
                     </li>
                 </ul>
             </div>
-        </section>
+        </section> */}
         <section class="page-section bg-light" id="team">
             <div class="container">
                 <div class="text-center">
@@ -664,7 +664,8 @@ class Welcome extends Component {
 function mapStatetoProps(state) {
     // console.log(state);
     return {
-      authenticated: state.auth.authenticated
+      authenticated: state.auth.authenticated,
+      id : state.auth.id
     }
   }
   

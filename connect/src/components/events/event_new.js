@@ -110,11 +110,11 @@ class PostNew extends Component {
           })
       })
 
-        // setTimeout(() => {
-        //     this.props.history.push({
-        //         pathname: '/events',
-        //     });
-        // },700);
+        setTimeout(() => {
+            this.props.history.push({
+                pathname: '/events',
+            });
+        },700);
     }
 
 

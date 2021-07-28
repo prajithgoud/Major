@@ -3,7 +3,8 @@ import {
   CREATE_COMMENT,
   FETCH_POSTS,
   FETCH_COMMENTS,
-  FETCH_EVENTS
+  FETCH_EVENTS,
+  FETCH_POSTS_BY_ID
 } from './types';
 
 export function fetchPosts() {
@@ -97,6 +98,23 @@ export function fetchComments(postId) {
     });
   }
 }
+
+export function fetchpostsbyid() {
+  return function(dispatch) {
+    axios.get('http://localhost:5000/userdetails', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
+    .then((res) => {
+      axios.get(`http://localhost:5000/api/posts/${res.data._id}`).then((response) => {
+      console.log(response)
+      dispatch({
+        type: FETCH_POSTS_BY_ID,
+        payload: response.data,
+      });
+    });
+    })
+    
+  }
+}
+
 // export function createPost({ title, categories, content }, historyPush, historyReplace) {
 
 //   return function(dispatch) {

@@ -78,17 +78,19 @@ const token = localStorage.getItem("token");
 // const token = cookies.get('jwt');
 
 if (token !== null) {
-  console.log(token);
   axios.get('http://localhost:5000/token', { headers: { "Authorization": `Bearer ${token}` } })
-    .then((res) => {
-      if (res.data === true) {
-        store.dispatch({ type: AUTH_USER })
-      }
-    })
-    .catch(error =>{
-      console.log(error.response.data);
-    }
-    )
+  .then((res) => {
+    // if (res.data === true) {
+      console.log(res.data)
+      store.dispatch({ 
+        type: AUTH_USER,
+        payload: res.data._id  
+       })
+    // }
+  })
+  .catch((error) => {
+    console.log(error.response.data)
+  });
 }
 else{
   console.log(token + "  po");

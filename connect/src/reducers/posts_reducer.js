@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {
     FETCH_POSTS,
+    FETCH_POSTS_BY_ID
 } from '../actions/types';
 
 // const initialState = {
@@ -14,7 +15,11 @@ export default function(state = {}, action) {
     switch(action.type) {
       case FETCH_POSTS:
         return _.mapKeys(action.payload, '_id');
+      case FETCH_POSTS_BY_ID:
+        return _.mapKeys(action.payload, '_id');
       default:
         return state;
     }
   } 
+
+  

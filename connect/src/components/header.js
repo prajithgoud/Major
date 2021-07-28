@@ -221,12 +221,12 @@ class Header extends Component {
       // this.setState({
       //   id : info.uid
       // })
-      axios.get('http://localhost:5000/userdetails', { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`} })
-      .then((res) => {
-        this.setState({
-          id: res.data._id
-        })
-      })
+      // axios.get('http://localhost:5000/userdetails', { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`} })
+      // .then((res) => {
+      //   this.setState({
+      //     id: res.data._id
+      //   })
+      // })
     }
   }
   dataTable() {
@@ -278,7 +278,7 @@ renderLinks() {
         <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white " data-bs-toggle="dropdown" aria-expanded="false">
         <span class="sr-only">Open user menu</span>
                     {/* <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/${id}`}  alt=""/> */}
-                    <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/user - ${this.state.id}.jpeg`} alt=""/>
+                    <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/user - ${this.props.id}.jpeg`} alt=""/>
                   </button>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="/userprofile">Your profile</a></li>
@@ -417,7 +417,8 @@ render() {
 function mapStatetoProps(state) {
   // console.log(state);
   return {
-    authenticated: state.auth.authenticated
+    authenticated: state.auth.authenticated , 
+    id : state.auth.id
   }
 }
 

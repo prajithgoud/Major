@@ -28,7 +28,7 @@ router.route('/createpost').post((req, res, next) => {
         content: reqcontent,
         time: reqtime,
         authorName: name,
-        // authorId: Id
+        authorId: Id
     }, (err, data) => {
         if (err) {
             return next(err)
@@ -39,6 +39,19 @@ router.route('/createpost').post((req, res, next) => {
     })
 });
 
+
+router.route('/posts/:id').get((req, res) => {
+    posts.find({
+        authorId: req.params.id
+    }, (error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            console.log('postsbyid')
+            res.json(data)
+        }
+    }).sort({time:-1})
+})
 
 router.route('/createevent').post((req,res,next) => {
     const token = req.headers.authorization.split(' ')[1];

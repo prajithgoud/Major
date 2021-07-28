@@ -33,7 +33,7 @@ const multer = require('multer');
 const sharp = require('sharp');
 const morgan = require('morgan');
 const stripe = require('stripe')('sk_test_51IAaigBmRJgBiaQCSrt5hDUoBpCHdeRb77Zw5Lg6mB5JjrjGnLjweOOMTqmlSt59o3QAmH8zB0yBHFyk6BwcwuQZ00nEQfBtW3');
-
+const eventpic = require('./models/events_schema');
 const app = express();
 
 
@@ -109,13 +109,14 @@ app.get('/hola',(req,res) => {
     res.render('base');
 });
 
-// app.use('/api',userRoute);
+//API FOR DELETING POSTS
 
-// const SignToken = id => {
-//     return jwt.sign({id} , process.env.JWT_SECRET,{
-//         expiresIn: process.env.JWT_EXPIRES_IN
-//     });
-// }
+app.use('/deletepost/:id' , catchAsync(async (req,res,next) => {
+    const Post =  await posts.findByIdAndRemove(req.params.id);
+    console.log('post deleted successfully')
+    res.json('post deleted successfully')
+}));
+
 
 const SignToken = (id,uname,Role) => {
     return jwt.sign({
@@ -227,7 +228,7 @@ app.post('/create-checkout-session', async (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: `${YOUR_DOMAIN}/success.html`,
+      success_url: `http://localhost:3000/success.html`,
       cancel_url: `${YOUR_DOMAIN}/public/cancel.html`,
     }
     const session = await stripe.checkout.sessions.create( params );
@@ -377,9 +378,11 @@ app.get('/token',verifyAccessToken, catchAsync(async (req,res,next) => {
     
     // console.log(req.payload);
     // console.log("hello");
-    res.send("true");
-   
+    // res.send("true");
         // res.json(req.payload);
+        var user = req.user
+        console.log(user)
+        res.send(user)
 }))
 
 app.get('/token/restriction',verifyAccessTokenWithRestriction, catchAsync(async (req,res,next) => {
@@ -666,7 +669,7 @@ const resizeeventpic = (req,res,next) => {
     req.file.filename = `usereventpic - ${req.params.content}.jpeg`;
 
     sharp(req.file.buffer)
-    // .resize(500,500)
+    .resize(500,500)
     .toFormat('jpeg')
     .jpeg({ quality:90})
     .toFile(`public/img/users/${req.file.filename}`);
@@ -678,7 +681,7 @@ app.use('/uploadeventpic/:name/:content' , uploadeventpic.single('Photo'),resize
     console.log(req.file);
     console.log(req.body);
     
-    events.updateOne({authorName : req.params.name,content : req.params.content},
+    eventpic.updateOne({authorName : req.params.name,content : req.params.content},
         {
             $set: {
                 Photo: req.file.filename

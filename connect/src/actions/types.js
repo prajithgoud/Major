@@ -5,3 +5,4 @@ export const CREATE_EVENT = "create_event";
 export const FETCH_EVENTS = "fetch_event";
 export const CREATE_COMMENT = 'create_comment';
 export const FETCH_COMMENTS = 'fetch_comments';
+export const FETCH_POSTS_BY_ID = 'fetch_posts_by_id';
