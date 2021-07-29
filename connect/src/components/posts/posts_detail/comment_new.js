@@ -21,10 +21,8 @@ class CreateUser extends Component {
     }
 
     onSubmit(e) {
+        
         e.preventDefault()
-
-        // console.log(this.state.title,this.state.categories,this.state.content)
-
         const token = localStorage.getItem('token')
         
         const formdet = {
@@ -34,18 +32,11 @@ class CreateUser extends Component {
         }
 
         console.log(formdet)
-
-        // axios.post('http://localhost:5000/api/createcomment', formdet,{
-        //     headers: { "Authorization": `Bearer ${token}` }
-        // }).then(res => {
-        //     console.log(res.data);
-        // }).catch(error => {
-        //     console.log(error.response.data);
-        // })
+      
         axios.get('http://localhost:5000/token', { headers: {"Authorization" : `Bearer ${token}`} })
         .then((res) => {
             console.log(res.data);
-            if(res.data === true){
+            if(res.data !== null){
                 console.log("inside if");
                 axios.post('http://localhost:5000/api/createcomment',formdet,{
                     headers: { "Authorization": `Bearer ${token}` }})

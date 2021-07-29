@@ -134,8 +134,8 @@ class Welcome extends Component {
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="team-member">
-                            {/* <img class="mx-auto rounded-circle" src={`http://localhost:5000/public/img/assets/img/team/1.jpg`} alt="..." /> */}
-                            <h4>Malipatel Roshan</h4>
+                            <img class="mx-auto rounded-circle" src={`http://localhost:5000/public/img/assets/img/team/1.png`} alt="..." />
+                            <h4 class="text-xl font-bold">Malipatel Roshan</h4>
                             {/* <p class="text-muted">Lead Designer</p> */}
                             <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
@@ -144,8 +144,8 @@ class Welcome extends Component {
                     </div>
                     <div class="col-lg-4">
                         <div class="team-member">
-                            {/* <img class="mx-auto rounded-circle" src={`http://localhost:5000/public/img/assets/img/team/2.jpg`} alt="..." /> */}
-                            <h4>Prajith Goud</h4>
+                            <img class="mx-auto rounded-circle" src={`http://localhost:5000/public/img/assets/img/team/2.png`} alt="..." />
+                            <h4 class="text-xl font-bold">Prajith Goud</h4>
                             {/* <p class="text-muted">Lead Marketer</p> */}
                             <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
@@ -154,8 +154,8 @@ class Welcome extends Component {
                     </div>
                     <div class="col-lg-4">
                         <div class="team-member">
-                            {/* <img class="mx-auto rounded-circle" src={`http://localhost:5000/public/img/assets/img/team/3.jpg`} alt="..." /> */}
-                            <h4>Sai Prasad</h4>
+                            <img class="mx-auto rounded-circle" src={`http://localhost:5000/public/img/assets/img/team/3.png`} alt="..." />
+                            <h4 class="text-xl font-bold">Sai Prasad</h4>
                             {/* <p class="text-muted">Lead Developer</p> */}
                             <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>

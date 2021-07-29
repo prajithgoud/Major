@@ -21,6 +21,29 @@
     color: #cccccc;
 }
 
+.image-preview3 {
+    /* background:url("avatar.png"); */
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; 
+    /* margin:0 auto; */
+    box-shadow:
+    /* logo shadow */
+    0px 0px 2px #5f5f5f,
+    /* offset */
+    0px 0px 0px 5px #ecf0f3,
+    /*bottom right */
+    8px 8px 15px #a7aaaf,
+    /* top left */
+    -8px -8px 15px #ffffff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top: 7%;
+    font-weight:bold;
+    color: #cccccc;
+}
+
 .image-preview__image {
     /* display:none; */
     width:100%;

@@ -175,10 +175,10 @@ class CreateUser extends Component {
                     <input type="text" class="w-full h-9 border-2 border-gray-200 p-2 rounded outline-none focus:border-purple-500" value={this.state.title} onChange={this.onChangetitle} />
                 </div>
                 
-                <div>
+                {/* <div>
                     <label class="block mb-1 font-bold text-gray-700">Category</label>
                     <input type="text" class="w-full h-9 border-2 border-gray-200 p-2 rounded outline-none focus:border-purple-500" value={this.state.categories} onChange={this.onChangecategories} />
-                </div>
+                </div> */}
 
                 <div>
                     <label class="block mb-1 font-bold text-gray-700">Content</label>
@@ -189,7 +189,7 @@ class CreateUser extends Component {
                 <div class="flex flex-wrap justify-center">
                 <div class="w-2/3">
                     <div class = "image-preview" id = "imagePreview"> 
-                       <img src = "" alt = "Image Preview" class = "image-preview__image"/>
+                       <img src ={this.state.Photo} alt = "Image Preview" class = "image-preview__image"/>
                         <span class="image-preview__default-text">Image Preview</span>
                     </div>
                     <br />
@@ -200,7 +200,16 @@ class CreateUser extends Component {
                     <label class="block mb-1 font-bold text-gray-700">Attach a pdf</label>
                     <input type = "file" name = "inpFile"  accept = "application/pdf" onChange={this.handleInputChange} class="pt-4"/>
                 </div>
-            
+                
+                <div class="">
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="flex flex-col">
+                             <label class="inline-flex items-center mt-3">
+                                <input type="checkbox" class="form-checkbox h-5 w-5 text-gray-600"/><span class="ml-2 text-gray-700">Priority</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="flex justify-center">
                 <button class="font-bold py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-700" onClick={this.update}>Submit</button>

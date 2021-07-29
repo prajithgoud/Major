@@ -60,20 +60,20 @@ class PostList extends Component {
     };
 
     return (
-      <div key={post._id} class="bg-white px-10 pt-4 pb-10 rounded shadow-xl hover:shadow-2xl ">
+      <div key={post._id} class="relative bg-white px-10 pt-4 pb-10 rounded shadow-xl hover:shadow-2xl ">
         
-        <h2 class="text-2xl font-bold mb-2 text-gray-700 flex justify-center">{post.title}</h2>
+        <h2 class="text-3xl font-bold mb-2 text-gray-700 flex justify-center">{post.title}</h2>
         
         <div class="absolute">
             <a href={`http://localhost:3000/profile/${post.authorId}`} class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-expanded="false">
-                <img class="h-6 w-6 rounded-full" src={`http://localhost:5000/public/img/users/user - ${post.authorId}.jpeg`} alt=""/>
+                <img class="h-9 w-9 rounded-full" src={`http://localhost:5000/public/img/users/user - ${post.authorId}.jpeg`} alt=""/>
             </a>
             
         </div>
 
-        <span className="ml-7 font-bold text-sm text-gray-700">{post.authorName}</span>
-        <br></br>
-        
+        <a href={`http://localhost:3000/profile/${post.authorId}`} className="block ml-11 pb-3 font-bold text-md text-gray-700">{post.authorName}</a>
+        {/* <br></br>
+        <br></br> */}
         <span className="text-sm text-gray-900">{new Date(post.time).toLocaleString()}</span>
         <br></br><br></br>
         <h3>
@@ -82,11 +82,11 @@ class PostList extends Component {
         <br />
         { post.Photo !== undefined  &&
           <div class ="flex justify-center" > 
-          <img src = {`http://localhost:5000/public/img/users/useruploadedpost - ${post.content}.jpeg`} class="h-5/12 w-1/2 rounded "/> 
+          <img src = {`http://localhost:5000/public/img/users/useruploadedpost - ${post.content}.jpeg`} class="h-1/2 w-1/2 rounded "/> 
         </div>}
 
         { post.post !== undefined &&
-            <a href="#/" onClick={() =>
+            <a href="#/" class="btn btn-primary absolute bottom-11 right-5" onClick={() =>
                             downloadFile(`${post._id}`, `${post.post}`, 'application/pdf')
                           }
             > Download file </a>
@@ -132,7 +132,7 @@ class PostList extends Component {
     // console.log(this.state.verified)
       return (
         
-        <div class="bg-gray-200">  
+        <div class="bg-gray-50">  
           <Header/>
           <Reload />
 

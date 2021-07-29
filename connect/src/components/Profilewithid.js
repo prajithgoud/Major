@@ -51,20 +51,38 @@ class ProfilewithId extends Component {
 
     renderPostSummary(post) {
         return (
-          <div key={post._id}>
+          <div key={post._id} class="relative bg-white px-10 pt-4 pb-10 rounded shadow-xl hover:shadow-2xl ">
     
-            {/* {this.renderTags(post.categories)} */}
-            <span>Title: {post.title}</span><br />
-            <span className="span-with-margin text-grey"> • </span>
-            <span className="span-with-margin text-grey">Author: {post.authorName}</span><br />
-            <span className="span-with-margin text-grey"> • </span>
-            <span className="span-with-margin text-grey">{new Date(post.time).toLocaleString()}</span>
-            <div className="text-justify" dangerouslySetInnerHTML={{ __html: post.content }} />
-            {/* <button onclick = {this.deletepost(post._id)}>Delete</button> */}
-            <br />
-            <Link className="link-without-underline" to={`/comments/${post._id}`}> View Comments </Link>
-            <hr />
+          <h2 class="text-2xl font-bold mb-2 text-gray-700 flex justify-center">{post.title}</h2>
+          
+          <div class="absolute">
+              <a href={`http://localhost:3000/profile/${post.authorId}`} class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-expanded="false">
+                  <img class="h-6 w-6 rounded-full" src={`http://localhost:5000/public/img/users/user - ${post.authorId}.jpeg`} alt=""/>
+              </a>
+              
           </div>
+  
+          <span className="ml-7 font-bold text-sm text-gray-700">{post.authorName}</span>
+          <br></br>
+          
+          <span className="text-sm text-gray-900">{new Date(post.time).toLocaleString()}</span>
+          <br></br><br></br>
+          <h3>
+            <div className="text-justify" dangerouslySetInnerHTML={{ __html: post.content }} />
+          </h3>
+          <br />
+          { post.Photo !== undefined  &&
+            <div class ="flex justify-center" > 
+            <img src = {`http://localhost:5000/public/img/users/useruploadedpost - ${post.content}.jpeg`} class="h-full w-full rounded "/> 
+          </div>}
+
+            <br></br>
+          {this.state.signedin === true && <Link className="link-without-underline" to={`/commentnew/${post._id}`}> Comment </Link>}
+          <br />
+          {<Link className="link-without-underline" to={`/comments/${post._id}`}> View Comments </Link>}
+          
+          <hr />
+            </div>
         );
       }
 
@@ -106,44 +124,40 @@ class ProfilewithId extends Component {
             
             <div>
                 <Header/>
-            <div class="min-h-screen flex items-center justify-center bg-blue-400">
+            <div class="flex items-center justify-center bg-light p-5">
 
-            <div class="bg-white p-10 rounded shadow-2xl w-4/5 lg:w-1/4">
-                <h2 class="text-3xl font-bold mb-10 text-gray-900 flex justify-center">Your Profile</h2>
+            <div class="relative bg-gray-300 p-5 rounded shadow-2xl w-5/12">
 
-                <div class = "image-preview" id = "imagePreview"> 
+                <p class="text-3xl font-bold ml-7 text-gray-900">{this.state.name}</p>
+
+                <div class = "image-preview3 float-left"> 
                         <img src = {`http://localhost:5000/public/img/users/${this.state.Photo}`} class = "image-preview__image"  alt = "Image Preview"/> 
-
-                        {/* <span class="image-preview__default-text">Image Preview</span> */}
+                        
                 </div>
 
-                <div>
-                    <label class="block my-1 font-bold text-gray-500">Name</label>
-                    <span class="font-bold text-green-900 font-serif">{this.state.name}</span>
-                </div>
                 
-                <div>
+                <div class="float-right">
                     <label class="block my-1 font-bold text-gray-500">DOB</label>
                     <span class="font-bold text-green-900 font-serif">{this.state.dob}</span>
-                </div>
                 
-                <div>
+                
+                
                     <label class="block my-1 font-bold text-gray-500">EMAIL</label>
                     <span class="font-bold text-green-900 font-serif">{this.state.email}</span>
-                </div>
+                
 
-                <div>
+                
                     <label class="block my-1 font-bold text-gray-500">Department</label>
                     <span class="font-bold text-green-900 font-serif">{this.state.department}</span>
-                </div>
+                
 
-                <div>
+                
                     <label class="block my-1 font-bold text-gray-500">Description</label>
                     <span class="font-bold text-green-900 font-serif">{this.state.description}</span>
                 </div>
                <br></br>
+
                 <Helmet>
-             
                 <script>
                     {`
                         const inpFile = document.getElementById("inpFile");
@@ -172,22 +186,23 @@ class ProfilewithId extends Component {
                     `}
                 </script>
                 </Helmet>
-                <div class="flex justify-center">
-                    <button class="font-bold py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-700" onClick={this.onSubmit}>Update profile</button>
-                </div>
+                
             </div>
 
         </div>
         </div>
             
-        <div>
-        <br />
-        <br />
-        <h3 className="mt-5 mb-4">Your Posts</h3>
-        {_.map(this.props.posts, postsbyid => {
-          return this.renderPostSummary(postsbyid);
-        })}
-      </div>
+      <section class="page-section bg-light pt-2" id="portfolio">
+                  <div class="container">
+                      <div class="row">
+                          <div class="grid grid-cols-3 gap-6">
+                          {_.map(this.props.posts, postsbyid => {
+                            return this.renderPostSummary(postsbyid);
+                            })}
+                          </div>
+                      </div>                 
+                  </div>
+      </section>
 
         </React.Fragment>
         );

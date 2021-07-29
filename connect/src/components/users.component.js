@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import DataTable from './data-table';
+import Header from "./header";
 
 export default class Users extends Component {
 
@@ -27,18 +28,16 @@ export default class Users extends Component {
 
     render() {
         return (
-            <div className="wrapper-users">
-                <div className="container">
-                    <table className="table table-striped table-dark">
+            <div className="">
+                <div className="">
+                 
+                    <table className="table table-striped table-dark w-2/3">
                         <thead className="thead-dark">
-                            <br /> 
-                            <br /> 
-                            <br /> 
-                            <br /> 
+                           <br/> 
                             <tr>
-                                <td>IDentification</td>
+                                {/* <td> &nbsp; &nbsp;  IDentification</td> */}
                                 <td>Email</td>
-                                {/* <td>Password</td> */}
+                                <td>Permissions</td>
                             </tr>
                         </thead>
                         <tbody>

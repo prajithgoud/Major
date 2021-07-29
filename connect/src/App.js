@@ -86,7 +86,7 @@ if (token !== null) {
     // }
   })
   .catch((error) => {
-    console.log(error.response.data)
+    // console.log(error.response.data)
   });
 }
 else{

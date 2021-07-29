@@ -60,16 +60,31 @@ class CreateUser extends Component {
         let Emailerror = "";
         let Passworderror = "";
         if (!this.state.Email.includes("@uceou.edu")) {
-            this.setState({
-                Emailerror : "Confined to uceou.edu account holders"
-            })
-            return 0;  
+            // this.setState({
+            //     Emailerror : "Confined to uceou.edu account holders"
+            // })
+            // return 0;
+            alert('Confined to uceou.edu account holders');  
         }
+        // var pass = this.state.Password;
+        // var reg = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/';
+        // var test = reg.match(pass);
+        // if (test) {
+        //     // alert('pass');
+        //     return 1;
+        // } else{
+        //      alert('Password must contain min 8 characters with atleast one numeric digit, one uppercase and one lowercase letter');
+        //     this.setState({
+        //         Passworderror : " "
+        //     })
+        //     return 0;
+        // }
         if(this.state.Password.length < 8) {
-            this.setState({
-                Passworderror : "Min. 8 characters"
-            })
-            return 0;
+            // this.setState({
+            //     Passworderror : "Min. 8 characters"
+            // })
+            // return 0;
+            alert('Minimum 8 characters');
         }
             return 1;
     }
@@ -166,62 +181,7 @@ class CreateUser extends Component {
       
     render() {
         return (
-            // <div>
-            // <Header />
-            // <div class="form-container">
-            
-                
-            // <form onSubmit={this.onSubmit} id="form">
-            //     <h3>Sign Up</h3>
-            //     <div class="container">
-            //     <span class="icon"><i class="fas fa-user"></i></span>
-            //     <input type="text" value={this.state.Name} onChange={this.onChangeName} placeholder="username"></input>
-            //     </div>
-            //     <div class="container">
-            //     <span class="icon"><i class="fas fa-at"></i></span>
-            //     <input type="email" value={this.state.Email} onChange={this.onChangeEmail} placeholder="email"></input>
-            //     <div style={{ fontSize: 12, color: "red", fontVariantCaps :"titling-caps" ,fontFamily :"sans-serif" }}>
-            //          {this.state.Emailerror} 
-            //     </div>
-            //     </div>
-               
-            //     <div class="container">
-            //     <span class="icon"><i class="fas fa-lock"></i></span>
-            //     <input type="password" value={this.state.Password} onChange={this.onChangePassword} placeholder="password"/>
-            //     <div style={{ fontSize: 12, color: "red", fontVariantCaps :"titling-caps" ,fontFamily :"sans-serif" }}>
-            //          {this.state.Passworderror} 
-            //     </div>
-            //     </div>
-            //     <div class="container">
-            //     <span class="icon"><i class="fas fa-lock"></i></span>
-            //     <input type="password" value={this.state.Confirm} onChange={this.onChangeConfirm} placeholder="Confirm Password"/>
-
-            //     <div class="container">
-                           
-            //                 <span class = "icon"><i class='fas fa-users'></i></span>
-                            // <input type="text" list="data" onChange={this.onChangerole} placeholder = "Role"/>
-                            // <datalist id="data">
-                            // {
-                            //     <option value = "Student" />
-                            // }
-                            // {
-                            //     <option value = "Professor" />
-                            // }
-                            // {
-                            //     <option value = "CR" />
-                            // }
-                            // </datalist>
-            //     </div>
-                // <p id="notmatch" style={{display: "none"}}> The Passwords does not Match </p>
-                // <p id="incorrect" style={{display: "none"}}> Your account already exists </p>
-                
-            //     </div>
-            //     <input type="submit" onClick = {this.update} value="Register" />
-                
-            // </form>
            
-            // </div>
-            // </div>
 
             <div>
                 <Header/>
@@ -239,6 +199,8 @@ class CreateUser extends Component {
                     <label class="block mb-1 font-bold text-gray-700">Email</label>
                     <input type="email" class="w-full h-9 border-2 border-gray-200 p-2 rounded outline-none focus:border-purple-500" value={this.state.Email} onChange={this.onChangeEmail} />
                 </div>
+
+               
 
                 <div>
                     <label class="block mb-1 font-bold text-gray-700">Password</label>

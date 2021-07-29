@@ -66,7 +66,7 @@ class Header extends Component {
   dataTable() {
     let details = this.state.data;
     return details.map((data,i) => {
-      return (
+      return ( 
         <div className = "user" key={i}>
           
           <p id = "searchp"><img class="h-12 w-12 rounded-full inline-block" src={`http://localhost:5000/public/img/users/user - ${data._id}.jpeg`} alt=""/><a href={`http://localhost:3000/profile/${data._id}`}>{data.Name}</a></p>

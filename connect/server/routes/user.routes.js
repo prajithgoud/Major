@@ -86,13 +86,14 @@ router.route('/createcomment').post((req, res, next) => {
 
     const content = req.body.content;
     const postId = req.body.postId
-    // const authorId = info.uid 
+    const authorId = info.uid 
     const authorName = info.uname
 
     comment.create({
         postId: postId,
         content: content,
         authorName: authorName,
+        authorId: authorId,
         time: Date.now()
     }, (err, data) => {
         if (err) {
