@@ -92,9 +92,9 @@ class PostList extends Component {
             > Download file </a>
           }
           <br></br>
-        {this.state.signedin === true && <Link className="link-without-underline" to={`/commentnew/${post._id}`}> Comment </Link>}
+        {this.state.signedin === true && <Link className="link-without-underline font-bold" to={`/commentnew/${post._id}`}> Comment </Link>}
         <br />
-        {<Link className="link-without-underline" to={`/comments/${post._id}`}> View Comments </Link>}
+        {<Link className="link-without-underline font-bold" to={`/comments/${post._id}`}> View Comments </Link>}
         
         <hr />
       </div>

@@ -55,7 +55,6 @@ class Welcome extends Component {
    
     <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white " data-bs-toggle="dropdown" aria-expanded="false">
     <span class="sr-only">Open user menu</span>
-                {/* <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/${id}`}  alt=""/> */}
                 <img class="h-8 w-8 rounded-full" src={`http://localhost:5000/public/img/users/user - ${this.props.id}.jpeg`} alt=""/>
               </button>
     <ul class="dropdown-menu">
@@ -64,7 +63,7 @@ class Welcome extends Component {
       <li><a class="dropdown-item" href="/addPhoto">Upload userphoto</a></li>
       <li><a class="dropdown-item" href="/updateprofile">Update Profile</a></li>
       <li><hr class="dropdown-divider" /></li>
-      <li><a class = "dropdown-item" ><button onClick = {this.signoutuser}> Sign out</button></a></li>
+      <li><a class = "dropdown-item" ><button onClick = {this.signoutuser}> SIGN OUT</button></a></li>
     </ul>
   </div>
       );

@@ -120,9 +120,9 @@ renderEventSummary(event) {
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     
-                                    <h2 class="text-uppercase">{event.title}</h2>
+                                    <h2 class="text-uppercase">{event.title}</h2> <br/>
                                     {/* <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p> */}
-                                    <img class="img-fluid d-block mx-auto" src={`http://localhost:5000/public/img/users/${event.Photo}`} alt="..." />
+                                    <img class="img-fluid d-block mx-auto h-1/2 w-1/2" src={`http://localhost:5000/public/img/users/${event.Photo}`} alt="..." />
                                     <p>{event.content}</p>
                                     
                                     <form action="http://localhost:5000/create-checkout-session" method="POST">
